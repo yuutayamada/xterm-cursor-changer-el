@@ -100,12 +100,12 @@ that correspond to evil-XXX-state-cursor variables."
                             (setq xcc-timer nil))))))
 
 ;; Memo
-;; \e[1 q\e[? 25 t -- box with blink
-;; \e[2 q\e[? 25 t -- box without blink
-;; \e[3 q\e[? 25 t -- hbar(underline) with blink
-;; \e[4 q\e[? 25 t -- hbar(underline) without blink
-;; \e[5 q\e[? 25 t -- bar(vertical) line with blink
-;; \e[6 q\e[? 25 t -- var(vertical) line without blink
+;; \e[1 q -- box with blink
+;; \e[2 q -- box without blink
+;; \e[3 q -- hbar(underline) with blink
+;; \e[4 q -- hbar(underline) without blink
+;; \e[5 q -- bar(vertical) line with blink
+;; \e[6 q -- bar(vertical) line without blink
 (defun xcc-get-cursor-shape-format (spec)
   "Extract adapt format from SPEC."
   (when spec
@@ -117,7 +117,7 @@ that correspond to evil-XXX-state-cursor variables."
                     (hbar 3)
                     (bar  5))))
       (when shape
-        (format "\e[%d q\e[? 25 t" (if xcc-use-blink shape (1+ shape)))))))
+        (format "\e[%d q" (if xcc-use-blink shape (1+ shape)))))))
 
 (defun xcc-evil-get-cursor-type ()
   "Return cons sell of cursor color and type for setting of evil.el."
