@@ -86,7 +86,8 @@ that correspond to evil-XXX-state-cursor variables."
 (defun xcc-xterm-p ()
   "Check whether on xterm or not."
   (and (not (display-graphic-p))
-       (getenv "XTERM_VERSION")))
+       (or (getenv "COLORTERM")
+           (getenv "XTERM_VERSION"))))
 
 (defun xcc-send-string (direction)
   "Send string of DIRECTION to terminal."
