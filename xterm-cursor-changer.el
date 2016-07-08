@@ -75,12 +75,11 @@ other types, it will be ignored (i.e., 'hollow)."
   "Change cursor color and shape on `evil-mode'.
 Like `xcc-change-cursor-color-and-shape', but this function uses variable
 that correspond to evil-XXX-state-cursor variables."
-  (when (and (xcc-xterm-p)
-             (or (bound-and-true-p evil-local-mode)
+  (when (and (or (bound-and-true-p evil-local-mode)
                  (bound-and-true-p evil-mode)))
-    (let ((color (format xcc-cursor-color-format (car (xcc-evil-get-cursor-type))))
-          (shape (xcc-get-cursor-shape-format    (cdr (xcc-evil-get-cursor-type)))))
-      (xcc-send-string (concat color shape)))))
+    (xcc-change-cursor-color-and-shape
+     (car (xcc-evil-get-cursor-type))
+     (cdr (xcc-evil-get-cursor-type)))))
 
 ;;;###autoload
 (defun xcc-xterm-p ()
