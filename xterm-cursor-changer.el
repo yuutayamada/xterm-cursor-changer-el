@@ -64,7 +64,7 @@
 (defun xcc-change-cursor-color-and-shape (&optional color type)
   "Change cursor COLOR and TYPE.
 The TYPE has to match to `cursor-type' variable and it only allow box,
-  bar, hbar, which can change cursor shape on xterm.  If you specify
+  bar, and hbar, which can change cursor shape on xterm.  If you specify
 other types, it will be ignored (i.e., 'hollow)."
   (when (xcc-xterm-p)
     (xcc-send-string color type)))
