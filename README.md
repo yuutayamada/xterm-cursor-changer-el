@@ -1,5 +1,5 @@
-# Xterm Cursor Changer
-This is a tiny Emacs Lisp package to change cursor figure on xterm for Emacs.
+# XTerm Cursor Changer
+This is a tiny Emacs Lisp package to change cursor figure of Emacs on XTerm or URxvt.
 
 ## Configuration
 
@@ -7,10 +7,8 @@ If you are using evil package, put below setting to your .emacs
 
 ```lisp
 (require 'xterm-cursor-changer)
-(defadvice evil-set-cursor (around xcc-evil-change-cursor activate)
-  (if (xcc-xterm-p)
-      (xcc-change-cursor-color-and-shape-on-evil)
-    ad-do-it))
+(advice-add 'evil-set-cursor :before
+            (lambda (&rest _r) (xcc-change-cursor-color-and-shape-on-evil)))
 ```
 
 Or you can configure yourself
@@ -19,7 +17,6 @@ Or you can configure yourself
 (if (your-condition)
   (xcc-change-cursor-color-and-shape "red" 'box))
 ```
-
 ## Note
 
 If you are using Tmux, you may need below configuration on your .tmux.conf.
