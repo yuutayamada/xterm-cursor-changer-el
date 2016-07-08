@@ -54,6 +54,7 @@
 
 (defvar xcc-use-blink nil)
 (defvar xcc-timer-delay 0.1 "Use this to prevent chattering.")
+(defvar xcc-before-send-hook nil)
 
 ;; Internal Variable
 (defvar xcc-cursor-color-format "]12;%s")
@@ -66,9 +67,7 @@ The TYPE has to match to `cursor-type' variable and it only allow box,
   bar, hbar, which can change cursor shape on xterm.  If you specify
 other types, it will be ignored (i.e., 'hollow)."
   (when (xcc-xterm-p)
-    (let* ((color (format xcc-cursor-color-format color))
-           (shape (xcc-get-cursor-shape-format type)))
-      (xcc-send-string (concat color shape)))))
+    (xcc-send-string color type)))
 
 ;;;###autoload
 (defun xcc-change-cursor-color-and-shape-on-evil ()
@@ -88,16 +87,18 @@ that correspond to evil-XXX-state-cursor variables."
        (or (getenv "COLORTERM")
            (getenv "XTERM_VERSION"))))
 
-(defun xcc-send-string (direction)
-  "Send string of DIRECTION to terminal."
-  (when (string< "" direction)
+(defun xcc-send-string (color type)
+  "Send terminal to apply cursor COLOR and TYPE of shape."
+  (let ((c (format xcc-cursor-color-format color))
+        (s (xcc-get-cursor-shape-format type)))
     ;; Prevent chattering
     (when xcc-timer (cancel-timer xcc-timer))
     (setq xcc-timer
           (run-with-timer xcc-timer-delay nil
-                          (lambda ()
-                            (send-string-to-terminal direction)
-                            (setq xcc-timer nil))))))
+                          `(lambda ()
+                             (run-hook-with-args 'xcc-before-send-hook ,color ,s)
+                             (send-string-to-terminal ,(concat c s))
+                             (setq xcc-timer nil))))))
 
 ;; Memo
 ;; \e[1 q -- box with blink
