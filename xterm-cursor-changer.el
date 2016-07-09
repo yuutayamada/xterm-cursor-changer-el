@@ -1,6 +1,6 @@
 ;;; xterm-cursor-changer.el --- Change cursor color and shape on xterm -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015  Yuta Yamada
+;; Copyright (C) 2015-2016  Yuta Yamada
 
 ;; Author: Yuta Yamada <sleepboy.zzz@gmail.com>
 ;; URL: https://github.com/yuutayamada/xterm-cursor-changer-el
