@@ -56,6 +56,7 @@
 (defvar xcc-use-blink nil)
 (defvar xcc-timer-delay 0.1 "Use this to prevent chattering.")
 (defvar xcc-before-send-hook nil)
+(defvar xcc-nocalled-hook nil)
 
 ;; Internal Variable
 (defvar xcc-cursor-color-format "]12;%s")
@@ -67,8 +68,9 @@
 The TYPE has to match to `cursor-type' variable and it only allow box,
   bar, and hbar, which can change cursor shape on xterm.  If you specify
 other types, it will be ignored (i.e., 'hollow)."
-  (when (xcc-xterm-p)
-    (xcc-send-string color type)))
+  (if (xcc-xterm-p)
+      (xcc-send-string color type)
+    (run-hook-with-args 'xcc-nocalled-hook color type)))
 
 ;;;###autoload
 (defun xcc-change-cursor-color-and-shape-on-evil ()
