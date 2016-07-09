@@ -5,7 +5,7 @@
 ;; Author: Yuta Yamada <sleepboy.zzz@gmail.com>
 ;; URL: https://github.com/yuutayamada/xterm-cursor-changer-el
 ;; Version: 0.1.0
-;; Package-Requires: ((cl-lib "0.5"))
+;; Package-Requires: ((emacs "25") (cl-lib "0.5"))
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -51,6 +51,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'subr-x) ; if-let
 
 (defvar xcc-use-blink nil)
 (defvar xcc-timer-delay 0.1 "Use this to prevent chattering.")
